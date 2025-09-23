@@ -1,0 +1,18 @@
+{
+  "name": "Game-On - Sports Booking",
+  "short_name": "Game-On",
+  "description": "Discover and book the best sports facilities in your city",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#22c55e",
+  "orientation": "portrait",
+  "categories": ["sports", "lifestyle", "booking"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
