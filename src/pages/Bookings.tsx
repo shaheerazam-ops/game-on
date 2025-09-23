@@ -4,12 +4,25 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import padelCourt from "@/assets/padel-court.jpg";
 import footballField from "@/assets/football-field.jpg";
 import basketballCourt from "@/assets/basketball-court.jpg";
 
 const Bookings = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth');
+    }
+  }, [user, navigate]);
+
+  if (!user) return null;
   const upcomingBookings = [
     {
       id: "1",
@@ -18,8 +31,8 @@ const Bookings = () => {
       sport: "Padel",
       date: "Today",
       time: "6:00 PM - 7:00 PM",
-      location: "Downtown Sports District",
-      price: 35,
+      location: "DHA Phase 5, Karachi",
+      price: 3500,
       status: "Confirmed",
       players: 4,
     },
@@ -30,8 +43,8 @@ const Bookings = () => {
       sport: "Football",
       date: "Tomorrow",
       time: "8:00 AM - 9:00 AM",
-      location: "Riverside Park",
-      price: 45,
+      location: "Clifton Beach, Karachi",
+      price: 4500,
       status: "Pending",
       players: 6,
     },
@@ -45,8 +58,8 @@ const Bookings = () => {
       sport: "Basketball", 
       date: "Jan 15, 2024",
       time: "7:30 PM - 8:30 PM",
-      location: "City Center",
-      price: 28,
+      location: "Gulshan-e-Iqbal, Karachi",
+      price: 2800,
       status: "Completed",
       players: 3,
       rating: 5,
@@ -58,8 +71,8 @@ const Bookings = () => {
       sport: "Padel",
       date: "Jan 12, 2024", 
       time: "5:00 PM - 6:00 PM",
-      location: "Downtown Sports District",
-      price: 35,
+      location: "DHA Phase 5, Karachi",
+      price: 3500,
       status: "Completed",
       players: 4,
       rating: 4,
@@ -99,7 +112,7 @@ const Bookings = () => {
               </Badge>
             </div>
             <div className="text-right">
-              <div className="text-sm font-semibold text-primary">${booking.price}</div>
+              <div className="text-sm font-semibold text-primary">PKR {booking.price}</div>
               <div className="text-xs text-muted-foreground">{booking.players} players</div>
             </div>
           </div>
@@ -209,7 +222,7 @@ const Bookings = () => {
               <div className="text-xs text-muted-foreground">Games Played</div>
             </Card>
             <Card className="p-3 text-center">
-              <div className="text-lg font-bold text-secondary">$180</div>
+              <div className="text-lg font-bold text-secondary">PKR 18,000</div>
               <div className="text-xs text-muted-foreground">Total Spent</div>
             </Card>
             <Card className="p-3 text-center">

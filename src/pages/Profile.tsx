@@ -1,11 +1,29 @@
-import { User, Settings, Calendar, Star, Trophy, CreditCard, Bell } from "lucide-react";
+import { User, Settings, Calendar, Star, Trophy, CreditCard, Bell, LogOut, Phone, MapPin } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 
 const Profile = () => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth');
+    }
+  }, [user, navigate]);
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/auth');
+  };
+
+  if (!user) return null;
   const userStats = [
     { icon: Calendar, label: "Bookings", value: "24", color: "text-primary" },
     { icon: Star, label: "Average Rating", value: "4.8", color: "text-yellow-500" },
@@ -19,7 +37,7 @@ const Profile = () => {
       sport: "Padel",
       date: "Today, 6:00 PM",
       status: "Confirmed",
-      price: 35,
+      price: 3500,
     },
     {
       id: "2", 
@@ -27,7 +45,7 @@ const Profile = () => {
       sport: "Football",
       date: "Tomorrow, 8:00 AM",
       status: "Pending",
-      price: 45,
+      price: 4500,
     },
     {
       id: "3",
@@ -35,7 +53,7 @@ const Profile = () => {
       sport: "Basketball",
       date: "Jan 20, 7:30 PM",
       status: "Completed",
-      price: 28,
+      price: 2800,
     },
   ];
 
@@ -57,10 +75,10 @@ const Profile = () => {
         <div className="py-6">
           <Card className="p-6 text-center bg-gradient-to-br from-primary/5 to-secondary/5">
             <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-primary flex items-center justify-center text-2xl font-bold text-primary-foreground">
-              JS
+              {user.email?.charAt(0).toUpperCase() || 'U'}
             </div>
-            <h1 className="text-2xl font-bold mb-1">John Smith</h1>
-            <p className="text-muted-foreground mb-4">Active Player Since 2023</p>
+            <h1 className="text-2xl font-bold mb-1">{user.email?.split('@')[0] || 'User'}</h1>
+            <p className="text-muted-foreground mb-4">Active Player • Karachi, Pakistan</p>
             
             <div className="flex items-center justify-center space-x-1 mb-4">
               {[1,2,3,4,5].map((star) => (
@@ -120,7 +138,7 @@ const Profile = () => {
                     <span className="mx-2">•</span>
                     <span>{booking.date}</span>
                   </div>
-                  <span className="font-semibold text-primary">${booking.price}</span>
+                  <span className="font-semibold text-primary">PKR {booking.price}</span>
                 </div>
               </Card>
             ))}
@@ -136,12 +154,17 @@ const Profile = () => {
               Account Settings
             </Button>
             <Button variant="outline" className="w-full justify-start" size="lg">
-              <CreditCard className="h-4 w-4 mr-3" />
-              Payment Methods
+              <Phone className="h-4 w-4 mr-3" />
+              Contact Support
             </Button>
-            <Button variant="outline" className="w-full justify-start" size="lg">
-              <Bell className="h-4 w-4 mr-3" />
-              Notifications
+            <Button 
+              variant="outline" 
+              className="w-full justify-start text-destructive hover:text-destructive" 
+              size="lg"
+              onClick={handleLogout}
+            >
+              <LogOut className="h-4 w-4 mr-3" />
+              Logout
             </Button>
           </div>
         </div>

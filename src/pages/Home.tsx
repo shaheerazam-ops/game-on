@@ -2,6 +2,8 @@ import { TrendingUp, Users, Award, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import SearchFilters from "@/components/SearchFilters";
 import VenueCard from "@/components/VenueCard";
@@ -12,6 +14,13 @@ import basketballCourt from "@/assets/basketball-court.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth');
+    }
+  }, [user, navigate]);
   // Mock data for venues
   const featuredVenues = [
     {
@@ -20,10 +29,10 @@ const Home = () => {
       image: padelCourt,
       rating: 4.8,
       reviews: 124,
-      location: "Downtown Sports District",
+      location: "DHA Phase 5, Karachi",
       distance: "0.8 km",
       sport: "Padel",
-      price: 35,
+      price: 3500,
       amenities: ["WiFi", "Parking", "Lighting"],
       availability: "Available" as const,
     },
@@ -33,10 +42,10 @@ const Home = () => {
       image: footballField,
       rating: 4.6,
       reviews: 89,
-      location: "Riverside Park",
+      location: "Clifton Beach, Karachi",
       distance: "1.2 km",
       sport: "Football",
-      price: 45,
+      price: 4500,
       amenities: ["Parking", "Showers", "Equipment"],
       availability: "Busy" as const,
     },
@@ -46,10 +55,10 @@ const Home = () => {
       image: basketballCourt,
       rating: 4.9,
       reviews: 156,
-      location: "City Center",
-      distance: "0.5 km", 
+      location: "Gulshan-e-Iqbal, Karachi", 
+      distance: "0.5 km",
       sport: "Basketball",
-      price: 28,
+      price: 2800,
       amenities: ["WiFi", "Lighting", "Showers"],
       availability: "Available" as const,
     },
@@ -84,7 +93,7 @@ const Home = () => {
               </span>
             </h1>
             <p className="text-lg text-muted-foreground mb-6">
-              Discover and book the best sports facilities in your city
+              Discover and book the best sports facilities in Karachi
             </p>
           </div>
           

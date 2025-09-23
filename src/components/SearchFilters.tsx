@@ -42,7 +42,7 @@ const SearchFilters = () => {
       {/* Quick Location */}
       <div className="flex items-center space-x-2 text-sm text-muted-foreground">
         <MapPin className="h-4 w-4" />
-        <span>Near Downtown, San Francisco</span>
+        <span>Near DHA, Karachi, Pakistan</span>
         <Button variant="link" size="sm" className="p-0 h-auto text-primary">
           Change
         </Button>

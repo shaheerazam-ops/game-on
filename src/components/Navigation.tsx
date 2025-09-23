@@ -1,11 +1,13 @@
-import { Search, MapPin, Calendar, User, Menu } from "lucide-react";
+import { Search, MapPin, Calendar, User, Menu, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState(
     location.pathname === "/profile" ? "profile" :
     location.pathname === "/bookings" ? "bookings" : "home"
@@ -36,9 +38,20 @@ const Navigation = () => {
               Game-On
             </h1>
           </div>
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <Menu className="h-5 w-5" />
-          </Button>
+          {user ? (
+            <Button variant="ghost" size="icon" onClick={signOut}>
+              <LogOut className="h-5 w-5" />
+            </Button>
+          ) : (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => navigate('/auth')}
+              className="rounded-lg"
+            >
+              Login
+            </Button>
+          )}
         </div>
       </nav>
 
